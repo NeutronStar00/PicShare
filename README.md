@@ -2,6 +2,9 @@
 
 PicShare is a social platform that allows users to seamlessly share and discover photos with friends and the community. Whether you're an avid photographer or someone who loves capturing life's moments, PicShare provides a vibrant space to showcase your visual stories.
 
+[![Deployed on Railway](https://img.shields.io/badge/Deployed%20on-Railway-blueviolet)](https://picshare-production.up.railway.app/)
+
+
 ## Overview
 
 PicShare is designed to make photo sharing a delightful experience. Upload and organize your photos, connect with friends, and explore a diverse range of captivating images from the community. The platform is built with simplicity and user-friendliness in mind, ensuring that sharing memories is as easy as a click.
