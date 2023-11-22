@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profile</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(#fd9797 0%, #49fdd0 45%, #d63f24);
+    }
+  </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+  <div class="text-center">
+      <h1 class="mt-5">Hello, <%= user.username || 'User' %></h1>
+
+      <!-- File Upload Form -->
+      <form action="/upload" method="post" enctype="multipart/form-data" class="mt-3">
+          <div class="mb-3">
+              <label for="file" class="form-label">Choose a file to upload:</label>
+              <input type="file" class="form-control" name="file" id="file" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+
+      <!-- Display a message if a file was successfully uploaded -->
+    <% if (fileUploaded) { %>
+      <p class="mt-3">File uploaded to Google Drive: <%= uploadedFile.name %></p>
+      <p>MIME Type: <%= uploadedFile.mimeType %></p>
+    <% } %>
+
+      <a href="/logout" class="btn btn-danger mt-3">Logout</a>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJMrhQo8bRniP1T4mZHPaE3%2FQGMvb" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyL8E5WZ4dI9qqzI69j7IBd1FkR5Lghh9S" crossorigin="anonymous"></script>
+</body>
+</html>

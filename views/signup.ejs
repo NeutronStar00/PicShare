@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signup</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(#fdf497 0%, #fd5949 45%, #d6249f);
+    }
+  </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+    <div class="container col-lg-4 col-md-6 col-sm-8" style="border-radius: 2rem; padding: 2rem 1rem; background: linear-gradient(#cef36f, rgb(102, 231, 126)); box-shadow: 12px 12px 2px 1px rgba(3, 3, 13, 0.549);">
+      <h4 style="font-size: 35px; color: rgb(220, 20, 97); font-weight: 500; font-family: 'Lobster', sans-serif; filter: drop-shadow(0.35rem 0.35rem 0.4rem rgba(0, 0, 0, 0.635)); text-align: center;"><i class="ri-fire-fill"></i> PicShare</h4>
+      <h4 style="font-size: 15px; font-family: monospace; font-weight: 800; text-align: center; color: rgb(0, 0, 0); margin-top: 12px;">We share, We Care!</h4>
+      <form action="/signup" method="post" class="mt-4">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email:</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Name:</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" style="font-family: monospace;">Sign Up</button>
+        </div>
+        <p class="lead mt-4 text-center">OR</p>
+        <div class="text-center">
+          <a href="/auth/google" class="btn btn-outline-secondary"><i class="ri-google-fill"></i> Continue with Google</a>
+          <p class=" mt-3">Already have an account? <a href="/">Log In</a></p>
+        </div>
+      </form>
+    </div>
+ 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJMrhQo8bRniP1T4mZHPaE3%2FQGMvb" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyL8E5WZ4dI9qqzI69j7IBd1FkR5Lghh9S" crossorigin="anonymous"></script>
+</body>
+</html>
