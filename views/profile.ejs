@@ -26,18 +26,9 @@
   <div class="text-center">
       <h1 class="mt-5">Hello, <%= user.username || 'User' %></h1>
 
-      <!-- File Upload Form -->
-      <form action="/upload" method="post" enctype="multipart/form-data" class="mt-3">
-          <div class="mb-3">
-              <label for="file" class="form-label">Choose a file to upload:</label>
-              <input type="file" class="form-control" name="file" id="file" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Upload</button>
-      </form>
-
       <!-- Display a message if a file was successfully uploaded -->
     <% if (fileUploaded) { %>
-      <p class="mt-3">File uploaded to Google Drive: <%= uploadedFile.name %></p>
+      <p class="mt-3">File uploaded: <%= uploadedFile.name %></p>
       <p>MIME Type: <%= uploadedFile.mimeType %></p>
     <% } %>
 

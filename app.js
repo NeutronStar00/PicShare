@@ -2,18 +2,18 @@ const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { google } = require('googleapis');
-const multer = require('multer');
-const fs = require('fs');
-const stream = require('stream');
 const session = require('express-session');
 const User = require('./models/user');
 const app = express();
-const dotenv = require('dotenv'); // Import dotenv
-dotenv.config(); // Load environment variables from .env file
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
+
+
+app.use(cookieParser());
 
 // Set up passport
 passport.use(new GoogleStrategy({
@@ -78,19 +78,22 @@ app.get('/profile', (req, res) => {
 });
 
 // Auth routes
-app.get('/auth/google', (req, res, next) => {
-  // Determine the state based on the referer (previous page)
-  const isSignup = req.headers.referer && req.headers.referer.includes('/signup');
-  
+app.get(
+  '/auth/google',
   passport.authenticate('google', {
-    state: isSignup ? 'signup' : 'login',
-  })(req, res, next);
-});
+    scope: ['profile', 'email'],
+    state: (req, res) => {
+      // Determine the state based on the referer (previous page)
+      const isSignup = req.headers.referer && req.headers.referer.includes('/signup');
+      res.cookie('state', isSignup ? 'signup' : 'login');
+    },
+  })
+);
 
-app.get('/auth/google/callback',
+app.get(
+  '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
-    console.log(req.user)
     // Custom callback function to handle redirection
     const redirectCallback = () => {
       // Check if the user is authenticated after the authentication attempt
@@ -99,7 +102,7 @@ app.get('/auth/google/callback',
         res.redirect('/profile');
       } else {
         // User is not authenticated, redirect based on the state
-        const redirectTo = req.query.state === 'signup' ? '/signup' : '/';
+        const redirectTo = req.cookies.state === 'signup' ? '/signup' : '/';
         res.redirect(redirectTo);
       }
     };
@@ -198,79 +201,6 @@ app.post('/signup', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
-
-// Set up OAuth2 client using environment variables
-const oAuth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_CALLBACK_URL
-);
-
-// Check if we have previously stored a token
-fs.readFile('token.json', (err, token) => {
-  if (err) {
-    getAccessToken(oAuth2Client);
-  } else {
-    oAuth2Client.setCredentials(JSON.parse(token));
-  }
-});
-
-// Function to get an access token and store it to 'token.json'
-function getAccessToken(oAuth2Client) {
-  const authUrl = oAuth2Client.generateAuthUrl({
-    access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/drive.file'],
-  });
-  console.log('Authorize this app by visiting this URL:', authUrl);
-}
-
-// Middleware for handling file uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-app.post('/upload', upload.single('file'), (req, res) => {
-  const file = req.file;
-
-  if (!file) {
-    return res.status(400).send('No file uploaded.');
-  }
-
-  const drive = google.drive({ version: 'v3', auth: oAuth2Client });
-
-  const driveFileMetadata = {
-    name: file.originalname,
-    mimeType: file.mimetype,
-  };
-
-  const driveFileMedia = {
-    mimeType: file.mimetype,
-    body: createReadStreamFromBuffer(file.buffer),
-  };
-
-  drive.files.create(
-    {
-      resource: driveFileMetadata,
-      media: driveFileMedia,
-    },
-    (err, driveFile) => {
-      if (err) {
-        console.error('Error uploading file to Google Drive:', err);
-        return res.status(500).send('Error uploading file to Google Drive.');
-      }
-
-      res.send(`File uploaded to Google Drive: ${driveFile.data.name}`);
-    }
-  );
-});
-
-// Function to create a readable stream from a buffer
-function createReadStreamFromBuffer(buffer) {
-  const readable = new stream.Readable();
-  readable._read = () => {};
-  readable.push(buffer);
-  readable.push(null);
-  return readable;
-}
 
 // Server starting
 const PORT = process.env.PORT || 3000;
